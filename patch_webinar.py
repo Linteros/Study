@@ -33,4 +33,15 @@ labels2 = r'''\node[font=\small\bfseries,text=MCGreen,anchor=east] at (axis cs:.
 if '$a=-1$};\n\\node[font=\\scriptsize\\bfseries,text=MCRed' not in s:
     s = s.replace(marker2, labels2, 1)
 
+# Example 3: label every red horizontal parameter level directly on the graph.
+marker3 = r'''\node[font=\small\bfseries,anchor=south west] at (axis cs:3.12,6) {$E$};'''
+labels3 = r'''\node[font=\small\bfseries,anchor=south west] at (axis cs:3.12,6) {$E$};
+\node[font=\scriptsize\bfseries,text=MCRed,fill=white,fill opacity=.9,text opacity=1,inner sep=1.2pt,anchor=east] at (axis cs:3.78,-5.65) {$a=-6$};
+\node[font=\scriptsize\bfseries,text=MCRed,fill=white,fill opacity=.9,text opacity=1,inner sep=1.2pt,anchor=east] at (axis cs:3.78,-1.65) {$a=-2$};
+\node[font=\scriptsize\bfseries,text=MCRed,fill=white,fill opacity=.9,text opacity=1,inner sep=1.2pt,anchor=east] at (axis cs:3.78,.35) {$a=0$};
+\node[font=\scriptsize\bfseries,text=MCRed,fill=white,fill opacity=.9,text opacity=1,inner sep=1.2pt,anchor=east] at (axis cs:3.78,2.35) {$a=2$};
+\node[font=\scriptsize\bfseries,text=MCRed,fill=white,fill opacity=.9,text opacity=1,inner sep=1.2pt,anchor=east] at (axis cs:3.78,6.35) {$a=6$};'''
+if '$a=-6$};\n\\node[font=\\scriptsize\\bfseries,text=MCRed' not in s:
+    s = s.replace(marker3, labels3, 1)
+
 p.write_text(s, encoding='utf-8')
