@@ -62,8 +62,7 @@ labels3 = r'''\node[font=\small\bfseries,anchor=south west] at (axis cs:3.12,6) 
 if '$a=-6$};\n\\node[font=\\scriptsize\\bfseries,text=MCRed' not in s:
     s = s.replace(marker3, labels3, 1)
 
-# Example 3 final polish: widen to the right, continue the lines horizontally,
-# and move red labels away from E and from the x-axis label.
+# Example 3 final polish: widen to the right, continue the lines horizontally.
 s = s.replace(r'  xmin=-4,xmax=4,ymin=-8,ymax=8,',
               r'  xmin=-4,xmax=5.5,ymin=-8,ymax=8,', 1)
 s = s.replace(r'  xtick={-4,-3,-2,-1,0,1,2,3,4},',
@@ -77,5 +76,13 @@ for old_y, new_y in [
     ('3.78,6.35',  '4.75,6.35'),
 ]:
     s = s.replace(f'at (axis cs:{old_y})', f'at (axis cs:{new_y})', 1)
+
+# Example 3 final label placement: put all red parameter values at the left edge.
+for y in ('-5.65', '-1.65', '.35', '2.35', '6.35'):
+    s = s.replace(
+        f'anchor=east] at (axis cs:4.75,{y})',
+        f'anchor=west] at (axis cs:-3.72,{y})',
+        1,
+    )
 
 p.write_text(s, encoding='utf-8')
