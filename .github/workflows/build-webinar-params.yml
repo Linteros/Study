@@ -34,3 +34,5 @@ jobs:
             git commit -m "Build webinar_params.pdf"
             git push origin HEAD:latex-params-webinar-20260905
           fi
+
+# build trigger
