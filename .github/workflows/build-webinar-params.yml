@@ -1,0 +1,36 @@
+name: Build webinar params PDF
+
+on:
+  push:
+    branches:
+      - latex-params-webinar-20260905
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: latex-params-webinar-20260905
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: webinar_params.tex
+          latexmk_use_xelatex: true
+          args: -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Commit PDF
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f webinar_params.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m "Build webinar_params.pdf"
+            git push origin HEAD:latex-params-webinar-20260905
+          fi
