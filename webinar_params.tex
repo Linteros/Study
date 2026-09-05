@@ -1,0 +1,523 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,top=13mm,bottom=15mm,left=14mm,right=14mm]{geometry}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{TeX Gyre Heros}
+\setsansfont{TeX Gyre Heros}
+\setmathfont{Latin Modern Math}
+\usepackage{amsmath,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx,booktabs,array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{ragged2e}
+\usepackage{microtype}
+\usepackage{lastpage}
+
+\definecolor{MCBlue}{HTML}{007AFE}
+\definecolor{MCDark}{HTML}{13243C}
+\definecolor{MCMuted}{HTML}{7C8695}
+\definecolor{MCLight}{HTML}{F1F7FF}
+\definecolor{MCPurple}{HTML}{7645FF}
+\definecolor{MCGreen}{HTML}{14AA78}
+\definecolor{MCRed}{HTML}{EF4F63}
+\definecolor{MCGold}{HTML}{DF9200}
+\definecolor{MCGrid}{HTML}{D8DEE8}
+\definecolor{MCAxis}{HTML}{596272}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\renewcommand{\baselinestretch}{1.05}
+\color{MCDark}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{\small\color{MCMuted}Параметры • Практика 1}
+\fancyhead[R]{\small\bfseries\color{MCBlue}Владислав Олегович}
+\fancyfoot[C]{\small\color{MCMuted}\thepage}
+\setlength{\headheight}{15pt}
+
+\newcommand{\sectitle}[2]{%
+  \vspace{1mm}
+  \noindent\begin{tikzpicture}[baseline=(num.base)]
+    \node[fill=MCBlue,text=white,font=\bfseries\Large,minimum width=11mm,minimum height=11mm,inner sep=0pt] (num) {#1};
+    \node[right=3mm of num,anchor=west,font=\bfseries\LARGE,text=MCDark] {#2};
+  \end{tikzpicture}\par\vspace{2mm}
+}
+\newcommand{\subhead}[1]{\vspace{1mm}{\large\bfseries\color{MCDark}#1}\par\vspace{1mm}}
+\newcommand{\answer}[1]{\vspace{2mm}\begin{tcolorbox}[enhanced,breakable,colback=MCLight,colframe=MCBlue!20,boxrule=.4pt,arc=3mm,left=4mm,right=4mm,top=2.5mm,bottom=2.5mm,borderline west={3pt}{0pt}{MCBlue}]\bfseries Ответ: #1\end{tcolorbox}}
+
+\newtcolorbox{problem}{enhanced,breakable,colback=MCLight,colframe=MCBlue!18,boxrule=.45pt,arc=3mm,left=4mm,right=4mm,top=3mm,bottom=3mm,borderline west={3pt}{0pt}{MCBlue}}
+\newtcolorbox{rulebox}{enhanced,breakable,colback=white,colframe=MCGrid,boxrule=.45pt,arc=3mm,left=4mm,right=4mm,top=2.5mm,bottom=2.5mm,borderline west={3pt}{0pt}{MCGreen}}
+\newtcolorbox{countbox}{enhanced,breakable,colback=white,colframe=MCGrid,boxrule=.45pt,arc=3mm,left=4mm,right=4mm,top=2.5mm,bottom=2.5mm,borderline west={3pt}{0pt}{MCPurple}}
+
+\pgfplotsset{
+  mcaxis/.style={
+    axis lines=middle,
+    axis line style={MCAxis,line width=.8pt},
+    tick style={MCAxis},
+    tick label style={font=\scriptsize,text=MCMuted},
+    label style={font=\small,text=MCAxis},
+    major grid style={MCGrid,line width=.35pt},
+    grid=major,
+    enlargelimits=false,
+    clip=true,
+    samples=100,
+    no markers,
+    axis equal image
+  }
+}
+
+\begin{document}
+
+% ========================= COVER =========================
+\thispagestyle{empty}
+\vspace*{8mm}
+{\Huge\bfseries\color{MCDark}Параметры}\par
+\vspace{2mm}
+{\LARGE\bfseries\color{MCBlue}Практика 1}\par
+\vspace{14mm}
+{\Large\bfseries Карта занятия:}\par
+\vspace{2mm}
+{\color{MCBlue}\rule{34mm}{1.2pt}}\par
+\vspace{8mm}
+\begin{minipage}[t]{.52\textwidth}
+{\large\bfseries\color{MCBlue}Линейные функции}\par\vspace{3mm}
+{\large 1. Параллельный перенос}\par\vspace{2mm}
+{\large 2. Пучок прямых}\par\vspace{2mm}
+{\large 3. Система $xOa$}\par
+\end{minipage}%
+\begin{minipage}[t]{.44\textwidth}
+\centering
+\begin{tikzpicture}[scale=.82]
+  \draw[->,MCAxis,line width=.9pt] (-3.4,0)--(3.5,0) node[right] {$x$};
+  \draw[->,MCAxis,line width=.9pt] (0,-3.2)--(0,3.5) node[above] {$y$};
+  \draw[MCGrid,step=.7] (-3.15,-2.8) grid (3.15,3.15);
+  \draw[MCBlue,very thick] (-3,-1.8)--(3,2.4);
+  \draw[MCPurple,very thick] (-3,2.8)--(3,-1.4);
+  \draw[MCRed,very thick,dashed] (-3,.8)--(3,.8);
+  \fill[MCDark] (0,.3) circle (1.7pt);
+  \node[font=\bfseries,text=MCBlue,anchor=west] at (1.8,2.05) {$y=ax+b$};
+  \node[font=\bfseries,text=MCPurple,anchor=west] at (1.45,-1.0) {$y=-x+c$};
+\end{tikzpicture}
+\end{minipage}
+\vfill
+{\small\color{MCMuted}Владислав Олегович}\par
+\newpage
+
+% ========================= EXAMPLE 1 =========================
+\sectitle{1}{Пример 1}
+\begin{problem}
+Найдите все значения параметра $a$, при каждом из которых система
+\[
+\begin{cases}
+\dfrac{(y^2-xy+2x-2y)\sqrt{x+1}}{\sqrt{6-x}}=0,\\[2mm]
+x+y-a-1=0
+\end{cases}
+\]
+имеет ровно два различных решения.
+\end{problem}
+
+\subhead{Решение}
+\begin{rulebox}
+\[
+\frac{A}{B}=0\iff\begin{cases}A=0,\\B\ne0,\end{cases}
+\qquad
+\sqrt A\ \text{существует}\iff A\ge0,
+\qquad
+\frac1{\sqrt A}\ \text{существует}\iff A>0.
+\]
+\end{rulebox}
+
+Рассмотрим первое уравнение системы:
+\[
+\begin{cases}
+(y^2-xy+2x-2y)\sqrt{x+1}=0,\\
+6-x>0.
+\end{cases}
+\]
+Так как
+\[
+y^2-xy+2x-2y=(y-2)(y-x),
+\]
+получаем
+\[
+(y-2)(y-x)\sqrt{x+1}=0.
+\]
+Из ограничений
+\[
+6-x>0\iff x<6,
+\qquad
+x+1\ge0\iff x\ge-1.
+\]
+Следовательно,
+\[
+\boxed{
+\begin{cases}
+-1\le x<6,\\[1mm]
+\left[\begin{aligned}
+y&=2,\\
+y&=x,\\
+x&=-1.
+\end{aligned}\right.
+\end{cases}}
+\]
+
+Второе уравнение:
+\[
+x+y-a-1=0\iff \boxed{y=-x+a+1}.
+\]
+Это прямая с угловым коэффициентом $k=-1$, проходящая через точку $(0;a+1)$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  mcaxis,width=.78\textwidth,height=79mm,
+  xmin=-3,xmax=7.5,ymin=-3,ymax=8,
+  xtick={-3,-2,-1,0,1,2,3,4,5,6,7},
+  ytick={-2,-1,0,1,2,3,4,5,6,7},
+  xlabel={$x$},ylabel={$y$}
+]
+\addplot[MCBlue,very thick,domain=-1:5.999] {2};
+\addplot[MCBlue,very thick,domain=-1:5.999] {x};
+\addplot[MCBlue,very thick] coordinates {(-1,-3) (-1,8)};
+\addplot[MCAxis,dashed,line width=.8pt] coordinates {(6,-3) (6,8)};
+\addplot[only marks,mark=*,mark size=2.2pt,MCDark] coordinates {(-1,-1) (-1,2) (2,2)};
+\addplot[only marks,mark=o,mark size=2.5pt,MCGreen,very thick] coordinates {(6,2) (6,6)};
+\node[font=\scriptsize\bfseries,text=MCBlue,anchor=south west] at (axis cs:3.8,2.05) {$y=2$};
+\node[font=\scriptsize\bfseries,text=MCBlue,anchor=south west,rotate=45] at (axis cs:3.2,3.2) {$y=x$};
+\node[font=\scriptsize\bfseries,text=MCBlue,anchor=south east] at (axis cs:-1.05,6.8) {$x=-1$};
+\node[font=\scriptsize\bfseries,text=MCMuted,anchor=south west] at (axis cs:6.05,-2.5) {$x=6$};
+\node[font=\scriptsize\bfseries,anchor=east] at (axis cs:-1.08,-1.05) {$A$};
+\node[font=\scriptsize\bfseries,anchor=east] at (axis cs:-1.08,2.05) {$B$};
+\node[font=\scriptsize\bfseries,anchor=south] at (axis cs:2,2.08) {$C$};
+\node[font=\scriptsize\bfseries,text=MCGreen,anchor=west] at (axis cs:6.12,2.0) {$D$};
+\node[font=\scriptsize\bfseries,text=MCGreen,anchor=west] at (axis cs:6.12,6.0) {$E$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\newpage
+
+\fancyhead[L]{\small\color{MCMuted}Параметры • Практика 1 • Пример 1}
+\subhead{Решим графически}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  mcaxis,width=.78\textwidth,height=82mm,
+  xmin=-3,xmax=7.5,ymin=-3,ymax=8,
+  xtick={-3,-2,-1,0,1,2,3,4,5,6,7},
+  ytick={-2,-1,0,1,2,3,4,5,6,7},xlabel={$x$},ylabel={$y$}
+]
+\addplot[MCBlue,very thick,domain=-1:5.999] {2};
+\addplot[MCBlue,very thick,domain=-1:5.999] {x};
+\addplot[MCBlue,very thick] coordinates {(-1,-3) (-1,8)};
+\addplot[MCAxis,dashed,line width=.8pt] coordinates {(6,-3) (6,8)};
+\addplot[MCRed!75,line width=1pt,domain=-3:7.5] {-x-2};
+\addplot[MCRed!75,line width=1pt,domain=-3:7.5] {-x+1};
+\addplot[MCRed!75,line width=1pt,domain=-3:7.5] {-x+4};
+\addplot[MCRed!75,line width=1pt,domain=-3:7.5] {-x+8};
+\addplot[MCRed!75,line width=1pt,domain=-3:7.5] {-x+12};
+\addplot[only marks,mark=*,mark size=2.4pt,MCDark] coordinates {(-1,-1) (-1,2) (2,2)};
+\addplot[only marks,mark=o,mark size=2.6pt,MCGreen,very thick] coordinates {(6,2) (6,6)};
+\node[font=\scriptsize\bfseries,anchor=east] at (axis cs:-1.08,-1.05) {$A$};
+\node[font=\scriptsize\bfseries,anchor=east] at (axis cs:-1.08,2.05) {$B$};
+\node[font=\scriptsize\bfseries,anchor=south] at (axis cs:2,2.08) {$C$};
+\node[font=\scriptsize\bfseries,text=MCGreen,anchor=west] at (axis cs:6.12,2) {$D$};
+\node[font=\scriptsize\bfseries,text=MCGreen,anchor=west] at (axis cs:6.12,6) {$E$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:-2.7,.55) {$a=-3$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:-2.7,3.55) {$a=0$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:-2.7,6.55) {$a=3$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:.25,7.55) {$a=7$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:4.25,7.55) {$a=11$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Найдём значения параметра для критических положений прямой $y=-x+a+1$:
+\[
+\begin{aligned}
+A(-1;-1):&\quad -1=1+a+1 &&\Rightarrow a=-3,\\
+B(-1;2):&\quad 2=1+a+1 &&\Rightarrow a=0,\\
+C(2;2):&\quad 2=-2+a+1 &&\Rightarrow a=3,\\
+D(6;2):&\quad 2=-6+a+1 &&\Rightarrow a=7,\\
+E(6;6):&\quad 6=-6+a+1 &&\Rightarrow a=11.
+\end{aligned}
+\]
+
+\begin{countbox}
+\begin{tabularx}{\textwidth}{>{\bfseries}l X}
+$a\le -3$ & 1 решение,\\
+$-3<a\le0$ & 2 решения,\\
+$0<a<3$ & 3 решения,\\
+$a=3$ & 2 решения,\\
+$3<a<7$ & 3 решения,\\
+$7\le a<11$ & 2 решения,\\
+$a\ge11$ & 1 решение.
+\end{tabularx}
+\end{countbox}
+\answer{$a\in(-3;0]\cup\{3\}\cup[7;11)$.}
+\newpage
+
+% ========================= EXAMPLE 2 =========================
+\fancyhead[L]{\small\color{MCMuted}Параметры • Практика 1}
+\sectitle{2}{Пример 2}
+\begin{problem}
+Найдите все значения параметра $a$, при каждом из которых система
+\[
+\begin{cases}
+y^2-10y-x^2+6x+16=0,\\
+y-ax=1,\\
+x>1
+\end{cases}
+\]
+имеет единственное решение.
+\end{problem}
+
+\subhead{Решение}
+Выделим полные квадраты:
+\[
+y^2-10y+25=(y-5)^2,
+\qquad
+x^2-6x+9=(x-3)^2.
+\]
+Тогда первое уравнение принимает вид
+\[
+(y-5)^2-(x-3)^2=0,
+\]
+то есть
+\[
+(y-5-(x-3))(y-5+(x-3))=0.
+\]
+Отсюда
+\[
+\left[\begin{aligned}
+y&=x+2,\\
+y&=-x+8.
+\end{aligned}\right.
+\]
+Второе уравнение:
+\[
+y-ax=1\iff \boxed{y=ax+1}.
+\]
+Следовательно, система имеет вид
+\[
+\begin{cases}
+\left[\begin{aligned}
+y&=x+2,\\
+y&=-x+8,
+\end{aligned}\right.\\[1mm]
+y=ax+1,\\
+x>1.
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  mcaxis,width=.76\textwidth,height=82mm,
+  xmin=-1.5,xmax=7.5,ymin=-2,ymax=10,
+  xtick={-1,0,1,2,3,4,5,6,7},ytick={-2,0,1,2,3,4,5,6,7,8,9,10},xlabel={$x$},ylabel={$y$}
+]
+\addplot[MCBlue,very thick,domain=1.001:7.5] {x+2};
+\addplot[MCBlue,very thick,domain=1.001:7.5] {-x+8};
+\addplot[MCAxis,dashed,line width=.8pt] coordinates {(1,-2) (1,10)};
+\addplot[only marks,mark=o,mark size=2.6pt,MCGreen,very thick] coordinates {(1,3) (1,7)};
+\addplot[only marks,mark=*,mark size=2.4pt,MCDark] coordinates {(3,5)};
+\node[font=\scriptsize\bfseries,text=MCBlue,anchor=south west,rotate=45] at (axis cs:4.5,6.5) {$y=x+2$};
+\node[font=\scriptsize\bfseries,text=MCBlue,anchor=south west,rotate=-45] at (axis cs:5.2,2.8) {$y=-x+8$};
+\node[font=\scriptsize\bfseries,text=MCMuted,anchor=south west] at (axis cs:1.08,-1.6) {$x=1$};
+\node[font=\scriptsize\bfseries,text=MCGreen,anchor=east] at (axis cs:.9,3) {$B$};
+\node[font=\scriptsize\bfseries,text=MCGreen,anchor=east] at (axis cs:.9,7) {$C$};
+\node[font=\scriptsize\bfseries,anchor=south west] at (axis cs:3.05,5.05) {$A$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\newpage
+
+\fancyhead[L]{\small\color{MCMuted}Параметры • Практика 1 • Пример 2}
+\subhead{Определим критические значения параметра}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  mcaxis,width=.76\textwidth,height=84mm,
+  xmin=-1.5,xmax=7.5,ymin=-2,ymax=10,
+  xtick={-1,0,1,2,3,4,5,6,7},ytick={-2,0,1,2,3,4,5,6,7,8,9,10},xlabel={$x$},ylabel={$y$}
+]
+\addplot[MCBlue,very thick,domain=1.001:7.5] {x+2};
+\addplot[MCBlue,very thick,domain=1.001:7.5] {-x+8};
+\addplot[MCAxis,dashed,line width=.8pt] coordinates {(1,-2) (1,10)};
+\addplot[MCRed!72,line width=1pt,domain=-1.5:7.5] {-x+1};
+\addplot[MCRed!72,line width=1pt,domain=-1.5:7.5] {x+1};
+\addplot[MCRed!72,line width=1pt,domain=-1.5:7.5] {4*x/3+1};
+\addplot[MCRed!72,line width=1pt,domain=-1.5:7.5] {2*x+1};
+\addplot[MCRed!72,line width=1pt,domain=-1.5:1.5] {6*x+1};
+\addplot[only marks,mark=o,mark size=2.6pt,MCGreen,very thick] coordinates {(1,3) (1,7)};
+\addplot[only marks,mark=*,mark size=2.4pt,MCDark] coordinates {(3,5)};
+\node[font=\scriptsize\bfseries,text=MCGreen,anchor=east] at (axis cs:.9,3) {$B$};
+\node[font=\scriptsize\bfseries,text=MCGreen,anchor=east] at (axis cs:.9,7) {$C$};
+\node[font=\scriptsize\bfseries,anchor=south west] at (axis cs:3.05,5.05) {$A$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:-1.2,2.3) {$a=-1$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:5.2,6.35) {$a=1$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:4.5,7.1) {$a=\frac43$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:3.5,8.25) {$a=2$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:1.15,8.2) {$a=6$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\[
+\begin{aligned}
+1)&\quad y=ax+1\parallel y=-x+8 &&\Rightarrow a=-1,\\
+2)&\quad y=ax+1\parallel y=x+2 &&\Rightarrow a=1,\\
+3)&\quad A:\ x+2=-x+8\Rightarrow x=3,\ y=5,\\
+&\qquad 5=3a+1 &&\Rightarrow a=\frac43,\\
+4)&\quad B(1;3):\quad 3=a+1 &&\Rightarrow a=2,\\
+5)&\quad C(1;7):\quad 7=a+1 &&\Rightarrow a=6.
+\end{aligned}
+\]
+
+\begin{countbox}
+\begin{tabularx}{\textwidth}{>{\bfseries}l X}
+$a\le-1$ & 0 решений,\\
+$-1<a\le1$ & 1 решение,\\
+$1<a<\frac43$ & 2 решения,\\
+$a=\frac43$ & 1 решение,\\
+$\frac43<a<2$ & 2 решения,\\
+$2\le a<6$ & 1 решение,\\
+$a\ge6$ & 0 решений.
+\end{tabularx}
+\end{countbox}
+\answer{$a\in(-1;1]\cup\left\{\frac43\right\}\cup[2;6)$.}
+\newpage
+
+% ========================= EXAMPLE 3 =========================
+\fancyhead[L]{\small\color{MCMuted}Параметры • Практика 1}
+\sectitle{3}{Пример 3}
+\begin{problem}
+Найдите все значения параметра $a$, при каждом из которых уравнение
+\[
+\frac{4x^2-a^2}{x^2+6x+9-a^2}=0
+\]
+имеет единственное решение.
+\end{problem}
+
+\subhead{Решение}
+\[
+\frac{A}{B}=0\iff\begin{cases}A=0,\\B\ne0.\end{cases}
+\]
+Поэтому
+\[
+\begin{cases}
+4x^2-a^2=0,\\
+x^2+6x+9-a^2\ne0
+\end{cases}
+\iff
+\begin{cases}
+(2x-a)(2x+a)=0,\\
+(x+3-a)(x+3+a)\ne0.
+\end{cases}
+\]
+Перенесём в систему координат $xOa$:
+\[
+\boxed{
+\begin{cases}
+\left[\begin{aligned}
+a&=2x,\\
+a&=-2x,
+\end{aligned}\right.\\[1mm]
+a\ne x+3,\\
+a\ne -x-3.
+\end{cases}}
+\]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  mcaxis,width=.76\textwidth,height=92mm,
+  xmin=-4,xmax=4,ymin=-8,ymax=8,
+  xtick={-4,-3,-2,-1,0,1,2,3,4},ytick={-8,-6,-4,-2,0,2,4,6,8},xlabel={$x$},ylabel={$a$}
+]
+\addplot[MCBlue,very thick,domain=-4:4] {2*x};
+\addplot[MCPurple,very thick,domain=-4:4] {-2*x};
+\addplot[MCAxis!75,dashed,line width=1pt,domain=-4:4] {x+3};
+\addplot[MCAxis!75,dashed,line width=1pt,domain=-4:4] {-x-3};
+\addplot[MCRed!70,dashed,line width=.9pt,domain=-4:4] {-6};
+\addplot[MCRed!70,dashed,line width=.9pt,domain=-4:4] {-2};
+\addplot[MCRed!70,dashed,line width=.9pt,domain=-4:4] {0};
+\addplot[MCRed!70,dashed,line width=.9pt,domain=-4:4] {2};
+\addplot[MCRed!70,dashed,line width=.9pt,domain=-4:4] {6};
+\addplot[only marks,mark=*,mark size=2.5pt,MCDark] coordinates {(3,-6) (-1,-2) (0,0) (-1,2) (3,6)};
+\node[font=\scriptsize\bfseries,anchor=north west] at (axis cs:3.08,-6) {$A$};
+\node[font=\scriptsize\bfseries,anchor=north east] at (axis cs:-1.08,-2) {$B$};
+\node[font=\scriptsize\bfseries,anchor=north west] at (axis cs:.08,0) {$C$};
+\node[font=\scriptsize\bfseries,anchor=south east] at (axis cs:-1.08,2) {$D$};
+\node[font=\scriptsize\bfseries,anchor=south west] at (axis cs:3.08,6) {$E$};
+\node[font=\scriptsize\bfseries,text=MCBlue,anchor=west,rotate=63] at (axis cs:2.2,4.4) {$a=2x$};
+\node[font=\scriptsize\bfseries,text=MCPurple,anchor=west,rotate=-63] at (axis cs:2.2,-4.4) {$a=-2x$};
+\node[font=\scriptsize\bfseries,text=MCAxis,anchor=west,rotate=45] at (axis cs:2.0,5.0) {$a=x+3$};
+\node[font=\scriptsize\bfseries,text=MCAxis,anchor=west,rotate=-45] at (axis cs:1.2,-4.2) {$a=-x-3$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:3.25,6.2) {$a=6$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:3.25,2.2) {$a=2$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:3.25,.2) {$a=0$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:3.25,-1.8) {$a=-2$};
+\node[font=\scriptsize\bfseries,text=MCRed,anchor=west] at (axis cs:3.25,-5.8) {$a=-6$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\newpage
+
+\fancyhead[L]{\small\color{MCMuted}Параметры • Практика 1 • Пример 3}
+\subhead{Найдём координаты критических точек}
+\[
+\begin{aligned}
+A:&\quad a=-2x,\ a=-x-3
+&&\Rightarrow -2x=-x-3\Rightarrow x=3,\ a=-6,\\[1mm]
+B:&\quad a=2x,\ a=-x-3
+&&\Rightarrow 2x=-x-3\Rightarrow x=-1,\ a=-2,\\[1mm]
+C:&\quad a=2x,\ a=-2x
+&&\Rightarrow x=0,\ a=0,\\[1mm]
+D:&\quad a=-2x,\ a=x+3
+&&\Rightarrow -2x=x+3\Rightarrow x=-1,\ a=2,\\[1mm]
+E:&\quad a=2x,\ a=x+3
+&&\Rightarrow 2x=x+3\Rightarrow x=3,\ a=6.
+\end{aligned}
+\]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  mcaxis,width=.68\textwidth,height=80mm,
+  xmin=-4,xmax=4,ymin=-8,ymax=8,
+  xtick={-4,-3,-2,-1,0,1,2,3,4},ytick={-8,-6,-4,-2,0,2,4,6,8},xlabel={$x$},ylabel={$a$}
+]
+\addplot[MCBlue,very thick,domain=-4:4] {2*x};
+\addplot[MCPurple,very thick,domain=-4:4] {-2*x};
+\addplot[MCAxis!75,dashed,line width=1pt,domain=-4:4] {x+3};
+\addplot[MCAxis!75,dashed,line width=1pt,domain=-4:4] {-x-3};
+\foreach \yy in {-6,-2,0,2,6}{\addplot[MCRed!70,dashed,line width=.9pt,domain=-4:4] {\yy};}
+\addplot[only marks,mark=*,mark size=2.5pt,MCDark] coordinates {(3,-6) (-1,-2) (0,0) (-1,2) (3,6)};
+\node[font=\scriptsize\bfseries,anchor=north west] at (axis cs:3.08,-6) {$A$};
+\node[font=\scriptsize\bfseries,anchor=north east] at (axis cs:-1.08,-2) {$B$};
+\node[font=\scriptsize\bfseries,anchor=north west] at (axis cs:.08,0) {$C$};
+\node[font=\scriptsize\bfseries,anchor=south east] at (axis cs:-1.08,2) {$D$};
+\node[font=\scriptsize\bfseries,anchor=south west] at (axis cs:3.08,6) {$E$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{countbox}
+Одно решение получается при
+\[
+a\in\{-6;-2;0;2;6\}.
+\]
+При остальных значениях параметра горизонтальная прямая $a=a_0$ даёт два решения.
+\end{countbox}
+\answer{$a\in\{-6;-2;0;2;6\}$.}
+
+\end{document}
