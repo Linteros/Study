@@ -38,3 +38,5 @@ jobs:
             git commit -m "Label parameter lines and fit example 2 answer"
             git push origin HEAD:latex-params-webinar-20260905
           fi
+
+# final graph-spacing rebuild trigger
